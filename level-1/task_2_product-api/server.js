@@ -68,12 +68,10 @@ app.delete('/api/products/:id', (req, res) => {
   }
 
   const deletedProduct = products.splice(index, 1);
-  return res
-    .status(200)
-    .json({
-      message: 'Product deleted successfully',
-      product: deletedProduct[0],
-    });
+  return res.status(200).json({
+    message: 'Product deleted successfully',
+    product: deletedProduct[0],
+  });
 });
 
 app.listen(PORT, () => {
