@@ -1,7 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
+app.use(cors());
 app.use(express.json());
 
 let products = [
@@ -9,6 +11,7 @@ let products = [
   { id: 2, name: 'Smartphone', price: 499.99 },
 ];
 
+//create operations
 app.post('/api/products', (req, res) => {
   const name = req.body && req.body.name ? String(req.body.name) : null;
   const price =
@@ -28,10 +31,12 @@ app.post('/api/products', (req, res) => {
   return res.status(201).json(freshProduct);
 });
 
+//read operations
 app.get('/api/products', (req, res) => {
   return res.status(200).json(products);
 });
 
+// update operations
 app.put('/api/products/:id', (req, res) => {
   const productId = Number(req.params.id);
   const product = products.find((p) => p.id === productId);
@@ -59,6 +64,7 @@ app.put('/api/products/:id', (req, res) => {
   return res.status(200).json(product);
 });
 
+// delete operations
 app.delete('/api/products/:id', (req, res) => {
   const productId = Number(req.params.id);
   const index = products.findIndex((p) => p.id === productId);

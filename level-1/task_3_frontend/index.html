@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Inventory Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Animated background blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Glass Navbar -->
+    <nav class="navbar glass">
+      <div class="logo">
+        <span class="logo-mark">◆</span>
+        <span>Inventory<strong>Hub</strong></span>
+      </div>
+      <div class="nav-actions">
+        <span class="nav-pill">Dashboard</span>
+      </div>
+    </nav>
+
+    <main class="container">
+      <!-- Header -->
+      <header class="page-header">
+        <div>
+          <h1>Product Inventory</h1>
+          <p>Manage your products with style.</p>
+        </div>
+      </header>
+
+      <!-- Stats -->
+      <section class="stats">
+        <div class="stat-card glass">
+          <div class="stat-label">Total Products</div>
+          <div class="stat-value" id="statTotal">0</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">Inventory Value</div>
+          <div class="stat-value" id="statValue">$0</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">Average Price</div>
+          <div class="stat-value" id="statAvg">$0</div>
+        </div>
+      </section>
+
+      <!-- Add Product Form -->
+      <section class="glass panel">
+        <h2>Add New Product</h2>
+        <form id="addForm" class="form-grid">
+          <div class="field">
+            <label for="name">Product Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="e.g. Wireless Headphones"
+            />
+          </div>
+          <div class="field">
+            <label for="price">Price ($)</label>
+            <input
+              type="number"
+              id="price"
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">+ Add Product</button>
+        </form>
+      </section>
+
+      <!-- Search -->
+      <section class="search-bar glass">
+        <input
+          type="text"
+          id="search"
+          placeholder="🔍  Search products by name..."
+        />
+      </section>
+
+      <!-- Alerts -->
+      <div id="alert" class="alert hidden"></div>
+
+      <!-- Products -->
+      <section id="productsSection">
+        <div id="loader" class="loader">
+          <div class="spinner"></div>
+          <p>Loading products...</p>
+        </div>
+        <div id="empty" class="empty hidden">
+          <div class="empty-icon">📦</div>
+          <h3>No products yet</h3>
+          <p>Add your first product using the form above.</p>
+        </div>
+        <div id="products" class="products-grid"></div>
+      </section>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="modal" class="modal-overlay hidden">
+      <div class="modal glass">
+        <div class="modal-header">
+          <h2>Edit Product</h2>
+          <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <form id="editForm" class="form-grid modal-form">
+          <input type="hidden" id="editId" />
+          <div class="field">
+            <label for="editName">Product Name</label>
+            <input type="text" id="editName" />
+          </div>
+          <div class="field">
+            <label for="editPrice">Price ($)</label>
+            <input type="number" id="editPrice" step="0.01" min="0" />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-ghost" id="modalCancel">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirm" class="modal-overlay hidden">
+      <div class="modal glass small">
+        <div class="modal-header">
+          <h2>Delete Product?</h2>
+        </div>
+        <p class="confirm-text">This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="confirmCancel">Cancel</button>
+          <button class="btn btn-danger" id="confirmOk">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="ui.js"></script>
+    <script src="modal.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
