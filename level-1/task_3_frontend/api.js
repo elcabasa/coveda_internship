@@ -1,7 +1,7 @@
 /* =========================================
    API Layer - handles all backend requests
    ========================================= */
-const API_BASE = 'https://YOUR-RAILWAY-URL/api/products';
+const API_BASE = 'https://coveda-internship.onrender.com/api/products';
 
 const api = {
   // GET all products
