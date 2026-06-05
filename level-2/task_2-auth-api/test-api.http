@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:3000
+
+### 1. Public — list all products
+GET {{baseUrl}}/api/products
+
+###
+
+### 2. Signup admin
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "admin123",
+  "role": "admin"
+}
+
+###
+
+### 3. Signup regular user
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "user@test.com",
+  "password": "user123"
+}
+
+###
+
+### 4. Login as admin (sets HTTP-only cookie)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "admin123"
+}
+
+###
+
+### 5. Get current user (requires login cookie)
+GET {{baseUrl}}/api/auth/me
+
+###
+
+### 6. Get single product (requires login cookie)
+GET {{baseUrl}}/api/products/1
+
+###
+
+### 7. Create product — admin only (requires admin login cookie)
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Monitor",
+  "price": 400
+}
+
+###
+
+### 8. Login as regular user
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@test.com",
+  "password": "user123"
+}
+
+###
+
+### 9. Create product as user — should return 403
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Denied Product",
+  "price": 1
+}
+
+###
+
+### 10. Logout
+POST {{baseUrl}}/api/auth/logout
+
+###
+
+### 11. Me after logout — should return 401
+GET {{baseUrl}}/api/auth/me
+
+###

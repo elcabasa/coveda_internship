@@ -1,6 +1,6 @@
 # Product Inventory Dashboard
 
-A full-stack product inventory project built during the Coveda internship. The repository includes a Node/Express Products API, a Level 1 vanilla JavaScript frontend, and a Level 2 React + Tailwind CSS frontend.
+A full-stack product inventory project built during the Coveda internship. The repository includes a Node/Express Products API, JWT authentication with role-based access, a Level 1 vanilla JavaScript frontend, and a Level 2 React + Tailwind CSS frontend.
 
 ## Projects Included
 
@@ -53,6 +53,23 @@ Location:
 level-2/task_1_react_frontend
 ```
 
+### Level 2 Task 2: Auth API
+
+An Express.js authentication API with JWT, bcrypt, HTTP-only cookies, and role-based route protection.
+
+- User signup and login
+- bcrypt password hashing
+- JWT stored in HTTP-only cookies
+- Protected routes with auth middleware
+- Admin-only product creation
+- Includes `test-api.http` for easy endpoint testing
+
+Location:
+
+```text
+level-2/task_2-auth-api
+```
+
 ## Tech Stack
 
 **Backend**
@@ -60,6 +77,9 @@ level-2/task_1_react_frontend
 - Node.js
 - Express.js
 - CORS
+- bcryptjs
+- jsonwebtoken
+- cookie-parser
 
 **Level 1 Frontend**
 
@@ -95,18 +115,26 @@ coveda_internship/
 │       └── styles.css
 │
 ├── level-2/
-│   └── task_1_react_frontend/
-│       ├── index.html
+│   ├── task_1_react_frontend/
+│   │   ├── index.html
+│   │   ├── package.json
+│   │   ├── tailwind.config.js
+│   │   ├── vite.config.js
+│   │   ├── README.md
+│   │   └── src/
+│   │       ├── App.jsx
+│   │       ├── index.css
+│   │       ├── main.jsx
+│   │       ├── components/
+│   │       └── services/
+│   │
+│   └── task_2-auth-api/
+│       ├── middleware/
+│       │   └── auth.js
+│       ├── server.js
+│       ├── test-api.http
 │       ├── package.json
-│       ├── tailwind.config.js
-│       ├── vite.config.js
-│       ├── README.md
-│       └── src/
-│           ├── App.jsx
-│           ├── index.css
-│           ├── main.jsx
-│           ├── components/
-│           └── services/
+│       └── README.md
 │
 └── level-3/
 ```
@@ -124,7 +152,7 @@ On Windows PowerShell, if `npm` is blocked by script policy, use:
 npm.cmd
 ```
 
-## Running the Backend API
+## Running the Level 1 Product API
 
 ```bash
 cd level-1/task_2_product-api
@@ -137,6 +165,22 @@ The backend runs on:
 ```text
 http://localhost:3000
 ```
+
+## Running the Level 2 Auth API
+
+```bash
+cd level-2/task_2-auth-api
+npm install
+npm run dev
+```
+
+The auth API runs on:
+
+```text
+http://localhost:3000
+```
+
+See `level-2/task_2-auth-api/README.md` for signup, login, and testing instructions. Use `test-api.http` in VS Code to run all endpoint tests.
 
 ## Running the Level 1 Frontend
 
@@ -187,12 +231,26 @@ npm run build
 
 ## API Endpoints
 
-| Method | Endpoint            | Description          |
-| ------ | ------------------- | -------------------- |
-| GET    | `/api/products`     | Get all products     |
-| POST   | `/api/products`     | Create a new product |
-| PUT    | `/api/products/:id` | Update a product     |
-| DELETE | `/api/products/:id` | Delete a product     |
+### Level 1 Product API
+
+| Method | Endpoint              | Description          |
+| ------ | --------------------- | -------------------- |
+| GET    | `/api/products`       | Get all products     |
+| POST   | `/api/products`       | Create a new product |
+| PUT    | `/api/products/:id`   | Update a product     |
+| DELETE | `/api/products/:id`   | Delete a product     |
+
+### Level 2 Auth API
+
+| Method | Endpoint              | Access        | Description              |
+| ------ | --------------------- | ------------- | ------------------------ |
+| POST   | `/api/auth/signup`    | Public        | Register a new user        |
+| POST   | `/api/auth/login`     | Public        | Login (sets JWT cookie)    |
+| POST   | `/api/auth/logout`    | Public        | Clear auth cookie          |
+| GET    | `/api/auth/me`        | Authenticated | Get current user           |
+| GET    | `/api/products`       | Public        | List all products          |
+| GET    | `/api/products/:id`   | Authenticated | Get one product            |
+| POST   | `/api/products`       | Admin only    | Create a new product       |
 
 Example product body:
 
@@ -200,6 +258,16 @@ Example product body:
 {
   "name": "Wireless Headphones",
   "price": 149.99
+}
+```
+
+Example signup body:
+
+```json
+{
+  "email": "admin@test.com",
+  "password": "admin123",
+  "role": "admin"
 }
 ```
 
@@ -235,7 +303,7 @@ Use `npm.cmd` instead of `npm`.
 - Add database persistence
 - Add product categories
 - Add inventory quantity tracking
-- Add authentication
+- Connect React frontend to Auth API
 - Add CSV export
 - Add deployment links
 
